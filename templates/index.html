@@ -3,9 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>End to End ML Project</title>
+    <meta name="description" content="A focused wildfire risk prediction tool powered by machine learning.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>EmberWatch | Wildfire Intelligence</title>
 </head>
 <body>
-    <h1>Welcome to the home page!!</h1>
+    <main class="landing-page">
+        <nav class="site-nav shell" aria-label="Main navigation">
+            <a class="brand" href="{{ url_for('hello_world') }}" aria-label="EmberWatch home">
+                <span class="brand-mark" aria-hidden="true">✦</span>
+                <span>Ember<span class="brand-accent">Watch</span></span>
+            </a>
+            <a class="nav-link" href="{{ url_for('predict_datapoint') }}">Open predictor <span aria-hidden="true">↗</span></a>
+        </nav>
+
+        <section class="hero shell">
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="pulse-dot"></span> Forest fire intelligence</p>
+                <h1>See the signal<br><em>before the spark.</em></h1>
+                <p class="hero-text">Estimate Fire Weather Index conditions with a lightweight prediction tool designed for faster, clearer decisions in the field.</p>
+                <div class="hero-actions">
+                    <a class="button button-primary" href="{{ url_for('predict_datapoint') }}">Start a prediction <span aria-hidden="true">→</span></a>
+                    <span class="action-note"><span class="mini-icon" aria-hidden="true">⌁</span> Powered by a trained ML model</span>
+                </div>
+            </div>
+            <div class="hero-visual" aria-label="Abstract illustration of a wildfire landscape">
+                <div class="sun-glow"></div>
+                <div class="visual-card visual-card-top"><span class="status-dot"></span> Live conditions <strong>Ready</strong></div>
+                <div class="mountain mountain-back"></div>
+                <div class="mountain mountain-front"></div>
+                <div class="flame" aria-hidden="true">✦</div>
+                <div class="visual-card visual-card-bottom"><span>FWI</span><strong>Predictive insight</strong></div>
+            </div>
+        </section>
+
+        <section class="feature-strip shell" aria-label="Product features">
+            <div class="feature"><span class="feature-number">01</span><div><h2>Input conditions</h2><p>Enter the latest weather and fuel readings.</p></div></div>
+            <div class="feature"><span class="feature-number">02</span><div><h2>Run the model</h2><p>Get a fast estimate from your field data.</p></div></div>
+            <div class="feature"><span class="feature-number">03</span><div><h2>Plan with clarity</h2><p>Use the result as one signal in your workflow.</p></div></div>
+        </section>
+
+        <footer class="shell landing-footer"><span>EMBERWATCH / 2024</span><span>Built for better awareness</span></footer>
+    </main>
 </body>
 </html>
