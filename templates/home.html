@@ -3,26 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <meta name="description" content="Enter weather and fire condition data to estimate the Fire Weather Index.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Predict FWI | EmberWatch</title>
 </head>
-<body>
-    <h1 style="color: black;">FWI Prediction</h1>
+<body class="app-background">
+    <header class="app-nav shell">
+        <a class="brand" href="{{ url_for('hello_world') }}" aria-label="EmberWatch home">
+            <span class="brand-mark" aria-hidden="true">✦</span>
+            <span>Ember<span class="brand-accent">Watch</span></span>
+        </a>
+        <a class="back-link" href="{{ url_for('hello_world') }}"><span aria-hidden="true">←</span> Back to overview</a>
+    </header>
 
-    <form action="{{url_for('predict_datapoint')}}" method="post">
+    <main class="predictor-layout shell">
+        <section class="predictor-intro">
+            <p class="eyebrow"><span class="pulse-dot"></span> Prediction workspace</p>
+            <h1>Read the conditions.<br><em>Know the risk.</em></h1>
+            <p class="intro-text">Add the latest observations below to generate a Fire Weather Index estimate. Use consistent units for the most useful result.</p>
+            <div class="tip-card">
+                <span class="tip-icon" aria-hidden="true">i</span>
+                <div><strong>Quick tip</strong><p>Fields marked with <span aria-hidden="true">*</span> are required. Review your readings before submitting.</p></div>
+            </div>
+        </section>
 
-        <input type="text" name="Temperature" placeholder="Temperature" required="required"><br>
-        <input type="text" name="RH" placeholder="RH" required="required"><br>
-        <input type="text" name="Ws" placeholder="Ws" required="required"><br>
-        <input type="text" name="Rain" placeholder="Rain" required="required"><br>
-        <input type="text" name="FFMC" placeholder="FFMC" required="required"><br>
-        <input type="text" name="DMC" placeholder="DMC" required="required"><br>
-        <input type="text" name="ISI" placeholder="ISI" required="required"><br>
-        <input type="text" name="Classes" placeholder="Classes" required="required"><br>
-        <input type="text" name="Region" placeholder="Region" required="required"><br>
+        <section class="form-card">
+            <div class="form-heading">
+                <div><span class="section-kicker">01 / 02</span><h2>Weather conditions</h2></div>
+                <span class="required-note"><span aria-hidden="true">*</span> Required</span>
+            </div>
+            <form action="{{ url_for('predict_datapoint') }}" method="post">
+                <div class="input-grid">
+                    <label class="field">
+                        <span>Temperature <small>°C</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="Temperature" placeholder="e.g. 32" step="any" required>
+                    </label>
+                    <label class="field">
+                        <span>Relative humidity <small>%</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="RH" placeholder="e.g. 45" step="any" required>
+                    </label>
+                    <label class="field">
+                        <span>Wind speed <small>km/h</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="Ws" placeholder="e.g. 18" step="any" required>
+                    </label>
+                    <label class="field">
+                        <span>Rain <small>mm</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="Rain" placeholder="e.g. 0.2" step="any" required>
+                    </label>
+                </div>
 
-        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button><br>
+                <div class="form-heading form-heading-spaced">
+                    <div><span class="section-kicker">02 / 02</span><h2>Fire indicators</h2></div>
+                </div>
+                <div class="input-grid">
+                    <label class="field">
+                        <span>Fine fuel moisture code <small>FFMC</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="FFMC" placeholder="e.g. 85" step="any" required>
+                    </label>
+                    <label class="field">
+                        <span>Duff moisture code <small>DMC</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="DMC" placeholder="e.g. 25" step="any" required>
+                    </label>
+                    <label class="field">
+                        <span>Initial spread index <small>ISI</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="ISI" placeholder="e.g. 7" step="any" required>
+                    </label>
+                    <label class="field">
+                        <span>Classes <small>encoded</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="Classes" placeholder="e.g. 1" step="any" required>
+                    </label>
+                    <label class="field">
+                        <span>Region <small>encoded</small><b aria-hidden="true">*</b></span>
+                        <input type="number" name="Region" placeholder="e.g. 0" step="any" required>
+                    </label>
+                </div>
 
-    </form>
-    <h2>The FWI Prediction is {{results}}</h2>
+                <button type="submit" class="button button-primary submit-button">Generate prediction <span aria-hidden="true">→</span></button>
+            </form>
+
+            {% if results is defined %}
+            <div class="result-panel" role="status">
+                <div class="result-icon" aria-hidden="true">✦</div>
+                <div><span class="section-kicker">Model output</span><h2>Fire Weather Index</h2></div>
+                <strong class="result-value">{{ results }}</strong>
+            </div>
+            {% endif %}
+        </section>
+    </main>
 </body>
 </html>
